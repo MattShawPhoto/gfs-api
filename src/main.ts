@@ -6,8 +6,43 @@ import { gfsParser } from "./csv-parser";
 import { FakeDatabaseContext } from "./store/fakeDbContext";
 import { forConsignmentNumber } from "./handlers/for-consignment-number";
 import { forDeliveryAddress } from "./handlers/for-delivery-address";
+import { parseArgs } from "node:util";
+import { exit } from "node:process";
+import { ApiOptions } from "./types/api-options";
+import * as fs from "node:fs"
+import { AddressInfo } from "node:net";
 
-// todo parse arguments
+// Parse arguments
+let options: ApiOptions = {
+    filePath:'',
+    port: 3001
+};
+
+const { values } = parseArgs({
+  options: {
+    filePath: { type: 'string', short: 'f' },
+    port: { type: 'string', short: 'p' },
+  },
+  allowPositionals: false,
+});
+
+if(!values.filePath) {
+    console.error(`No file path specified, exiting.`)
+    exit();
+}
+
+options.filePath = values.filePath
+
+if(!fs.existsSync(values.filePath)) {
+    console.error(`Couldn't find ${values.filePath}, exiting.`)
+    exit();
+}
+
+if(!values.port) {
+    console.error(`No port specified, using ${options.port}.`)
+} else {
+    options.port = parseInt(values.port);
+}
 
 const dbContext = new FakeDatabaseContext();
 
@@ -39,4 +74,7 @@ router.all('*', (request: IRequest) => notFound(`${request.url} not found at GFS
 // Start server and listen for requests
 const itty = createServerAdapter(router.fetch)
 const httpServer = createServer(itty);
-httpServer.listen(3001);
+httpServer.listen(options.port);
+
+const address = httpServer.address() as AddressInfo;
+console.log(`gfs-api is listening on localhost at port ${address.port}`)
