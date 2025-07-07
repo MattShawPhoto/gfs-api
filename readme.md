@@ -1,7 +1,7 @@
-# GFS-API
+# 📦 GFS-API
 
 ## Introduction
-This is a small REST API written in typescript for as an answer to the GFS technical test.
+👋 This is a small REST API written in typescript for as an answer to the GFS technical test.
 
 It accepts a data set in csv format, loads it into an in-memory data store and provides a simple mechanism to query data
 
