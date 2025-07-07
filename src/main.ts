@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { createServerAdapter } from "@whatwg-node/server";
-import { AutoRouter} from "itty-router";
-import { ok } from "@major-tanya/fancy-status";
+import { AutoRouter, IRequest} from "itty-router";
+import { notFound, ok } from "@major-tanya/fancy-status";
 import { gfsParser } from "./csv-parser";
 import { FakeDatabaseContext } from "./store/fakeDbContext";
 import { forConsignmentNumber } from "./handlers/for-consignment-number";
@@ -19,9 +19,9 @@ const router = AutoRouter()
 
 // add routes
 
-router.get('/v1/consignments/:consignmentId', (request) => forConsignmentNumber(request, dbContext))
+router.get('/v1/consignments/:consignmentId', (request: IRequest) => forConsignmentNumber(request, dbContext))
 
-router.get('/v1/consignments?', (request) => {
+router.get('/v1/consignments?', (request: IRequest) => {
 
     if(request.query['address']) {
         return forDeliveryAddress(request, dbContext)
@@ -30,9 +30,11 @@ router.get('/v1/consignments?', (request) => {
     // todom, check other qs params and return 400 if params don't match allowed ones.
 })
 
-router.get('/v1/health', (request) => {
+router.get('/v1/health', () => {
     return ok();
 })
+
+router.all('*', (request: IRequest) => notFound(`${request.url} not found at GFS`))
 
 // Start server and listen for requests
 const itty = createServerAdapter(router.fetch)
