@@ -9,7 +9,8 @@
   "dependencies": {
       "itty-router": "^5.0.18",
       "@major-tanya/fancy-status": "^0.1.7",
-      "@whatwg-node/server": "^0.10.10"
+      "@whatwg-node/server": "^0.10.10",
+      "csv-parse": "^5.6.0"
   },
   "devDependencies": {
       "ts-node": "^10.9.2",
