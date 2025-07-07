@@ -1,3 +1,10 @@
 export type Consignment = {
-    consignmentNumber: string
+    consignmentNumber: string,
+    deliveryAddress: string,
+    weight: string,
+    deliveryType: string,
+    parcelCount: number,
+    shipmentDate: string,
+    deliveryDate: string,
+    status: string
 }

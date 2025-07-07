@@ -53,7 +53,6 @@ export const gfsParser = (path: string, dbContext: IDatabaseContext): void => {
     fs.createReadStream(path)
         .pipe(parser)
         .on('data', (record: Consignment) => {
-            console.log(record.consignmentNumber)
             dbContext.insert(record)
         })
         .on('skip', ({ message, code }: { message: string, code: string }) => console.log(`❌ Skipped record for reason: ${code}, ${message}`))
