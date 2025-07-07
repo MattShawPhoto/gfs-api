@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { createServerAdapter } from "@whatwg-node/server";
-import { AutoRouter, IRequest} from "itty-router";
+import { AutoRouter, IRequest, json} from "itty-router";
 import { ok } from "@major-tanya/fancy-status";
 import { gfsParser } from "./csv-parser";
 import { FakeDatabaseContext, IDatabaseContext } from "./store/fakeDbContext";
@@ -31,6 +31,8 @@ const forConsignmentNumber = (request: IRequest, dbContext: IDatabaseContext) =>
         pages: Math.ceil(consignments.length / pageSize),
         data : take(skip(consignments,pageNumber - 1), pageSize)
     };
+
+    return json(result)
 }
 
 // add routes
