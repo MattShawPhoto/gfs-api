@@ -11,11 +11,6 @@ router.get('/v1/health', (request) => {
     return ok();
 })
 
-router.get('/v1/dave', (request) => {
-    console.log(`foo`)
-    return ok();
-})
-
 // Start server and listen for requests
 const itty = createServerAdapter(router.fetch)
 const httpServer = createServer(itty);
