@@ -62,7 +62,7 @@ router.get('/v1/consignments?', (request: IRequest) => {
         return forDeliveryAddress(request, dbContext)
     }
 
-    // todom, check other qs params and return 400 if params don't match allowed ones.
+    // todo, check other qs params and return 400 if params don't match allowed ones.
 })
 
 router.get('/v1/health', () => {
