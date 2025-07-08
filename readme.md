@@ -63,7 +63,7 @@ The response format is consistent across the end points (for now)
 
 I have used `itty-router` for routing because it's quite small and has a nice api.
 
-Data is loaded from a csv into a Hashmap (implemented as a map of `<string, consignment>` where string is the consignment number). This works in well enough in the demo environment but in more real-world environment this could be an in-memory store such as redis, sqlite or even an RDMS. Whatever store is used, when datasets get larger we'll have to think about indexing on fields we want to query on, efficient query design, etc. We could shard data sets, for example by courier or archive older records. We don't want to ETL our store every time our API starts up so this could be a separate service.
+Data is loaded from a csv into a Hashmap (implemented as a map of `<string, consignment>` where `string` is the consignment number). This works in well enough in the demo environment but in more real-world environment this could be an in-memory store such as redis, sqlite or even an RDMS. Whatever store is used, when datasets get larger we'll have to think about indexing on fields we want to query on, efficient query design, etc. We could shard data sets, for example by courier or archive older records. We don't want to ETL our store every time our API starts up so this could be a separate service.
 
 I've used the `csv-parse` package to extract data from a csv file, transform it into our storage shape, and then load it into our store. I have chosen not to hand-roll a parser both for time constraints but more importantly for the huge number of potential edge case it'll have to deal with.
 
@@ -74,18 +74,18 @@ I have included a `/health` endpoint that something like check.ly, it could chec
 ### Users
 What is the intended use of the API?, Who/What will be calling the API?, How often will it be called?
 
-I'm using a hashmap as an in-memorty store for convenience but in a real scenario we'd want a proper db, could be redis, cosmos, monogp etc.
+I'm using a hashmap as an in-memory store for convenience but in a real scenario we'd want a proper db, could be redis, cosmos, monogo etc.
 
 ### ETL (Extract Transform Load)
 I decided to use a well tested and maintained parser, (`csv-parse` seemed reasonable) that could cope with bad input data.
 
 We can also use this to transform our data into a more consistent storage shape as we extract and load it.
 
-To guard against csv-injection attacks we don't automatically cast any of the input data to natibe types other than strings.
+To guard against csv-injection attacks we don't automatically cast any of the input data to native types other than strings.
 
-In a real world scenario we'd also want to normalise things like address formar.
+In a real world scenario we'd also want to normalise things like address format.
 
-Input shape is variable, use our ETL process process into a consistent storage shape
+Input shape is variable, use our ETL process into a consistent storage shape
 
 ### Output Shape
 
@@ -111,7 +111,7 @@ I looked a little at guarding against injection attacks in the csv parser but en
 * Use prepared statement/stored proc for querying db
 
 ### Other thoughts and concerns
-* Use ETags/Last-Modified header to aid with caching cacheing
+* Use ETags/Last-Modified header to aid with caching
 * logging/observability
 
 This list is far from comprehensive but hopefully includes some interesting points. It's offered as a starting point for a conversation about design constraints, requirements, etc.
