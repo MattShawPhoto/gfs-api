@@ -47,7 +47,7 @@ if(!values.port) {
 const dbContext = new FakeDatabaseContext();
 
 // Parse input file into db context
-gfsParser('./data/DPD_Test.csv', dbContext)
+gfsParser(values.filePath, dbContext)
 
 // Create router
 const router = AutoRouter()
