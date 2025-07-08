@@ -13,7 +13,7 @@ export const forDeliveryAddress = (request: IRequest, dbContext: IDatabaseContex
         return badRequest();
     }
 
-    const consignments = dbContext.findAddress(address); // ??? shouldn't be undefined, could coerce to a string but feels hacky!
+    const consignments = dbContext.findAddress(address.toString());
 
     let pageNumber: number = parseInt(request.query['pageNumber'] as string) || 1;
     let pageSize: number = parseInt(request.query['pageSize'] as string) || 10

@@ -22,9 +22,9 @@ export class FakeDatabaseContext implements IDatabaseContext{
 
     findConsignmentNumber(searchStr: string ): Consignment [] {
         const results = [];
-        const pattern = new RegExp(searchStr, 'g')
+        const pattern = new RegExp(searchStr.toLowerCase(), 'g')
         for(const [key, value] of this.items_) {
-          if(pattern.test(value.consignmentNumber)) {
+          if(pattern.test(value.consignmentNumber.toLowerCase())) {
             let item = this.items_.get(key)
             if(item) {
               results.push(item);
@@ -36,9 +36,9 @@ export class FakeDatabaseContext implements IDatabaseContext{
 
       findAddress(searchStr: string ): Consignment [] {
           const results = [];
-          const pattern = new RegExp(searchStr, 'g')
+          const pattern = new RegExp(searchStr.toLowerCase(), 'g')
           for(const [key, value] of this.items_) {
-            if(pattern.test(value.deliveryAddress)) {
+            if(pattern.test(value.deliveryAddress.toLowerCase())) {
               let item = this.items_.get(key)
               if(item) {
                 results.push(item);
